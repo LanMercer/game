@@ -1,0 +1,30 @@
+<%
+/**
+ * 联机游戏轨道
+ * 
+ * 筛选 track: multi 的文章并渲染为卡片
+ */
+
+// 获取联机游戏文章（按日期正序）
+const multiPosts = site.posts.filter(post => post.track === 'multi').sort('date', 'asc');
+%>
+
+<section class="track track-multi" data-track="multi">
+  <header class="track-header">
+    <h2 class="track-title">联机游戏</h2>
+    <p class="track-subtitle">与好友的珍贵回忆</p>
+  </header>
+  
+  <div class="track-content">
+    <% if (multiPosts.length === 0) { %>
+      <div class="track-placeholder">
+        <p>暂无联机游戏记录</p>
+        <span>在 source/_posts/ 添加 track: multi 的文章</span>
+      </div>
+    <% } else { %>
+      <% multiPosts.forEach(post => { %>
+        <%- partial('game-card', { post: post, track: 'multi' }) %>
+      <% }) %>
+    <% } %>
+  </div>
+</section>

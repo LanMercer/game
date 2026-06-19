@@ -1,0 +1,75 @@
+# Game Career Theme Configuration
+# Nord 冰川极简风配色方案
+
+# 网站基本信息
+site:
+  title: 游戏生涯记录站
+  subtitle: 记录每一次冒险与感动
+  description: 个人游戏生涯记录，单机与联机游戏的双轨记忆
+
+# 导航菜单
+menu:
+  首页: /
+  单机游戏: /#single-track
+  联机游戏: /#multi-track
+  关于: /about
+
+# 社交链接
+social:
+  github: 
+  steam: 
+  bilibili: 
+
+# 主题设置
+theme:
+  # 时间轴起始年份
+  timeline_start_year: 2020
+  
+  # 每页显示文章数
+  per_page: 20
+  
+  # 是否启用星图连线
+  enable_star_map: true
+  
+  # 是否启用媒体画廊
+  enable_lightbox: true
+  
+  # 是否启用 Swiper 相册
+  enable_swiper: true
+
+# Nord 配色方案（可直接修改）
+colors:
+  # 左轨 - 单机区（极光灰蓝）
+  single_primary: "#81A1C1"
+  single_secondary: "#5E81AC"
+  single_bg: "rgba(129, 161, 193, 0.03)"
+  
+  # 右轨 - 联机区（沉沙浅金）
+  multi_primary: "#EBCB8B"
+  multi_secondary: "#D08770"
+  multi_bg: "rgba(235, 203, 139, 0.03)"
+  
+  # 全局背景
+  bg_dark: "#2E3440"
+  bg_medium: "#3B4252"
+  bg_light: "#434C5E"
+  
+  # 文字颜色
+  text_primary: "#D8DEE9"
+  text_secondary: "#E5E9F0"
+  text_muted: "#4C566A"
+
+# CDN 配置（国内可替换为镜像源）
+cdn:
+  swiper_css: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+  swiper_js: "https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+  lazysizes: "https://cdn.jsdelivr.net/npm/lazysizes@5.3/lazysizes.min.js"
+
+# 图片懒加载占位图
+placeholder_image: data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7
+
+# 页脚信息
+footer:
+  copyright: © 2024 游戏生涯记录站
+  powered_by: true
+  theme_by: true

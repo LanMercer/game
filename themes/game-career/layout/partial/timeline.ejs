@@ -1,0 +1,59 @@
+<%
+/**
+ * 时间轴侧边栏
+ * 
+ * 功能：
+ * 1. 从所有文章中提取年份和月份
+ * 2. 按时间倒序排列
+ * 3. 生成锚点链接用于快速导航
+ */
+
+// 获取所有文章并按日期排序
+const allPosts = site.posts.sort('date', 'asc');
+
+// 按年份和月份分组
+const timeline = {};
+allPosts.forEach(post => {
+  const year = post.date.format('YYYY');
+  const month = post.date.format('MM');
+  
+  if (!timeline[year]) {
+    timeline[year] = new Set();
+  }
+  timeline[year].add(month);
+});
+
+// 获取排序后的年份列表
+const years = Object.keys(timeline).sort((a, b) => a - b);
+%>
+
+<aside class="timeline-sidebar">
+  <div class="timeline-header">
+    <h2 class="timeline-title">历程</h2>
+  </div>
+  
+  <nav class="timeline-nav">
+    <% if (years.length === 0) { %>
+      <div class="timeline-placeholder">
+        <span>暂无记录</span>
+      </div>
+    <% } else { %>
+      <% years.forEach(year => { %>
+        <div class="timeline-year">
+          <a href="#year-<%= year %>" class="year-link"><%= year %></a>
+          <div class="timeline-months">
+            <% 
+              // 将月份转换为数组并倒序排列
+              const months = Array.from(timeline[year]).sort((a, b) => a - b);
+              months.forEach(month => { 
+            %>
+              <a href="#<%= year %>-<%= month %>" class="month-link">
+                <%= month %>月
+              </a>
+            <% }) %>
+          </div>
+        </div>
+      <% }) %>
+    <% } %>
+  </nav>
+</aside>

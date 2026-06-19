@@ -1,0 +1,916 @@
+/* ============================================================
+   游戏生涯记录站 - Nord 冰川极简风 完整样式
+   ============================================================ */
+
+/* ---- CSS 变量（Nord 色板） ---- */
+:root {
+  /* Polar Night - 极夜（深色背景层） */
+  --nord0: #2E3440;
+  --nord1: #3B4252;
+  --nord2: #434C5E;
+  --nord3: #4C566A;
+
+  /* Snow Storm - 雪暴（浅色文字层） */
+  --nord4: #D8DEE9;
+  --nord5: #E5E9F0;
+  --nord6: #ECEFF4;
+
+  /* Frost - 霜冻（冷色主题） */
+  --nord7: #8FBCBB;
+  --nord8: #88C0D0;
+  --nord9: #81A1C1;
+  --nord10: #5E81AC;
+
+  /* Aurora - 极光（暖色强调） */
+  --nord11: #BF616A;
+  --nord12: #D08770;
+  --nord13: #EBCB8B;
+  --nord14: #A3BE8C;
+  --nord15: #B48EAD;
+
+  /* 语义化颜色 */
+  --single-primary: var(--nord9);
+  --single-secondary: var(--nord10);
+  --multi-primary: var(--nord13);
+  --multi-secondary: var(--nord12);
+
+  /* 动画 */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.6s;
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* 阴影 */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-single: 0 4px 20px rgba(129, 161, 193, 0.15);
+  --shadow-single-lg: 0 8px 30px rgba(129, 161, 193, 0.25);
+  --shadow-multi: 0 4px 20px rgba(235, 203, 139, 0.15);
+  --shadow-multi-lg: 0 8px 30px rgba(235, 203, 139, 0.25);
+}
+
+/* ---- 基础重置 ---- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--nord0);
+  color: var(--nord4);
+  line-height: 1.6;
+  overflow: hidden;
+  height: 100vh;
+  font-size: 16px;
+}
+
+a {
+  color: var(--nord9);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--nord8);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+}
+
+/* ---- 滚动条 ---- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--nord3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--nord4);
+}
+
+/* ---- 主容器 ---- */
+.main-container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ---- 时间轴侧边栏 ---- */
+.timeline-sidebar {
+  width: 72px;
+  min-width: 72px;
+  background: var(--nord1);
+  border-right: 1px solid var(--nord2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 10;
+}
+
+.timeline-header {
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.timeline-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--nord9);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.timeline-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  width: 100%;
+  padding: 0 0.5rem;
+}
+
+.timeline-year {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--nord2);
+}
+.timeline-year:first-child {
+  border-top: none;
+}
+
+.year-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--nord5);
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.1em;
+  transition: all var(--transition-fast);
+  padding: 0.25rem 0;
+}
+.year-link:hover {
+  color: var(--nord9);
+  transform: scale(1.05);
+}
+.year-link.active {
+  color: var(--nord9);
+}
+
+.timeline-months {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.month-link {
+  font-size: 0.65rem;
+  color: var(--nord3);
+  text-decoration: none;
+  writing-mode: vertical-rl;
+  transition: color var(--transition-fast);
+  padding: 0.15rem 0;
+}
+.month-link:hover {
+  color: var(--nord8);
+}
+.month-link.active {
+  color: var(--nord13);
+}
+
+.timeline-placeholder {
+  color: var(--nord3);
+  font-size: 0.7rem;
+  writing-mode: vertical-rl;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ---- 双轨容器 ---- */
+.tracks-container {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- 轨道基础 ---- */
+.track {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width var(--transition-slow) var(--ease-out);
+  position: relative;
+  padding: 2rem 2.5rem;
+}
+
+.track-single {
+  width: 50%;
+  background: linear-gradient(180deg, rgba(129, 161, 193, 0.04) 0%, rgba(129, 161, 193, 0.01) 100%);
+  border-right: 1px solid var(--nord2);
+}
+
+.track-multi {
+  width: 50%;
+  background: linear-gradient(180deg, rgba(235, 203, 139, 0.04) 0%, rgba(235, 203, 139, 0.01) 100%);
+}
+
+/* ---- 悬停展开（CSS :has()） ---- */
+.tracks-container:has(.track-single:hover) .track-single {
+  width: 75%;
+}
+.tracks-container:has(.track-single:hover) .track-multi {
+  width: 25%;
+}
+.tracks-container:has(.track-multi:hover) .track-multi {
+  width: 75%;
+}
+.tracks-container:has(.track-multi:hover) .track-single {
+  width: 25%;
+}
+
+/* ---- 轨道头部 ---- */
+.track-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 1rem 0 2rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(180deg, var(--nord0) 60%, transparent 100%);
+}
+
+.track-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.track-single .track-title {
+  color: var(--single-primary);
+}
+.track-multi .track-title {
+  color: var(--multi-primary);
+}
+
+.track-subtitle {
+  color: var(--nord3);
+  font-size: 0.8rem;
+  margin-top: 0.4rem;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+}
+
+/* ---- 轨道分隔线 ---- */
+.track-single::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent 0%, var(--nord2) 10%, var(--nord2) 90%, transparent 100%);
+}
+
+/* ---- 轨道内容区 ---- */
+.track-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-bottom: 4rem;
+}
+
+/* ---- 占位符 ---- */
+.track-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  color: var(--nord3);
+  text-align: center;
+  border: 1px dashed var(--nord2);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+}
+.track-placeholder p {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.track-placeholder span {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  line-height: 1.8;
+}
+
+/* ---- 游戏卡片 ---- */
+.game-card {
+  background: var(--nord1);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--nord2);
+  transition: all var(--transition-normal) var(--ease-out);
+  position: relative;
+  overflow: hidden;
+}
+.game-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--nord3);
+}
+.game-card.star-highlight {
+  transform: scale(1.02);
+  z-index: 2;
+}
+.game-card.star-dimmed {
+  opacity: 0.25;
+  filter: blur(1px);
+  transform: scale(0.98);
+}
+
+/* 单机区卡片 */
+.track-single .game-card {
+  border-left: 3px solid var(--single-primary);
+}
+.track-single .game-card:hover {
+  box-shadow: var(--shadow-single);
+}
+.track-single .game-card.star-highlight {
+  box-shadow: var(--shadow-single-lg);
+}
+
+/* 联机区卡片 */
+.track-multi .game-card {
+  border-left: 3px solid var(--multi-primary);
+}
+.track-multi .game-card:hover {
+  box-shadow: var(--shadow-multi);
+}
+.track-multi .game-card.star-highlight {
+  box-shadow: var(--shadow-multi-lg);
+}
+
+/* ---- 卡片头部 ---- */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.6rem;
+  gap: 1rem;
+}
+
+.game-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--nord6);
+  line-height: 1.4;
+  flex: 1;
+}
+
+.game-date {
+  font-size: 0.7rem;
+  color: var(--nord3);
+  white-space: nowrap;
+  font-weight: 400;
+  padding-top: 0.15rem;
+}
+
+/* ---- 卡片描述 ---- */
+.game-description {
+  color: var(--nord4);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ---- 媒体展示 ---- */
+.game-media {
+  margin: 0.75rem 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.media-single {
+  cursor: zoom-in;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.media-single img {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  object-fit: cover;
+  transition: transform var(--transition-normal);
+  display: block;
+}
+.media-single:hover img {
+  transform: scale(1.03);
+}
+
+/* ---- Swiper 相册 ---- */
+.game-album {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.game-album .swiper-slide {
+  cursor: zoom-in;
+}
+.game-album .swiper-slide img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+.game-album .swiper-pagination {
+  bottom: 8px;
+}
+.game-album .swiper-pagination .swiper-pagination-bullet {
+  background: var(--nord4);
+  opacity: 0.4;
+  width: 6px;
+  height: 6px;
+}
+.game-album .swiper-pagination .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: var(--nord6);
+}
+
+.album-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(46, 52, 64, 0.85);
+  color: var(--nord4);
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.05em;
+}
+
+/* ---- 视频缩略图 ---- */
+.game-videos {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  flex-wrap: wrap;
+}
+.video-thumbnail {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: var(--nord2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: 0.75rem;
+}
+.video-thumbnail:hover {
+  background: var(--nord3);
+}
+.play-icon {
+  color: var(--nord13);
+  font-size: 0.7rem;
+}
+.video-label {
+  color: var(--nord4);
+}
+
+/* ---- 卡片元信息 ---- */
+.card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--nord2);
+}
+.meta-item {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--nord2);
+  border-radius: var(--radius-sm);
+  color: var(--nord4);
+  font-weight: 400;
+}
+.meta-item.platform {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.meta-item.playtime {
+  color: var(--nord8);
+}
+.meta-item.rating {
+  color: var(--nord13);
+  letter-spacing: 0.05em;
+  font-size: 0.65rem;
+}
+
+/* ---- 标签 ---- */
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.5rem 0;
+}
+.tag {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: 1px solid var(--nord3);
+  color: var(--nord4);
+  transition: all var(--transition-fast);
+  font-weight: 400;
+}
+.track-single .tag:hover {
+  border-color: var(--single-primary);
+  color: var(--single-primary);
+}
+.track-multi .tag:hover {
+  border-color: var(--multi-primary);
+  color: var(--multi-primary);
+}
+
+/* ---- 联机区：好友列表 ---- */
+.game-partners {
+  margin: 0.6rem 0;
+  font-size: 0.8rem;
+  color: var(--nord4);
+  opacity: 0.85;
+}
+.game-partners .partners-label {
+  color: var(--nord3);
+  font-size: 0.75rem;
+}
+.game-partners .partner-name {
+  color: var(--multi-primary);
+  font-weight: 500;
+}
+
+/* ---- 游戏瞬间标签 ---- */
+.game-moments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.5rem 0;
+}
+.moment-tag {
+  font-size: 0.65rem;
+  padding: 0.2rem 0.6rem;
+  background: rgba(235, 203, 139, 0.12);
+  color: var(--multi-primary);
+  border-radius: 10px;
+  font-weight: 400;
+}
+
+/* ---- 卡片链接 ---- */
+.card-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: var(--single-primary);
+  transition: all var(--transition-fast);
+  font-weight: 500;
+}
+.card-link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+.track-multi .card-link {
+  color: var(--multi-primary);
+}
+
+/* ---- 星图 SVG 覆盖层 ---- */
+.star-map-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  overflow: visible;
+}
+
+/* ---- Lightbox 画廊 ---- */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-normal);
+}
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.lightbox-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(46, 52, 64, 0.95);
+  backdrop-filter: blur(10px);
+}
+.lightbox-container {
+  position: relative;
+  z-index: 1;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+.lightbox-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox-content img,
+.lightbox-content video {
+  max-width: 85vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-lg);
+}
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  color: var(--nord4);
+  font-size: 1.8rem;
+  transition: color var(--transition-fast);
+  line-height: 1;
+}
+.lightbox-close:hover {
+  color: var(--nord6);
+}
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(59, 66, 82, 0.8);
+  color: var(--nord4);
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(4px);
+}
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: var(--nord3);
+  color: var(--nord6);
+}
+.lightbox-prev {
+  left: -60px;
+}
+.lightbox-next {
+  right: -60px;
+}
+.lightbox-counter {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--nord4);
+  font-size: 0.8rem;
+  opacity: 0.7;
+  font-weight: 300;
+}
+
+/* ---- 动画关键帧 ---- */
+@keyframes dash {
+  to { stroke-dashoffset: -100; }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+
+/* ---- 卡片入场动画 ---- */
+.game-card {
+  animation: fadeIn 0.4s var(--ease-out) both;
+}
+.game-card:nth-child(1)  { animation-delay: 0.05s; }
+.game-card:nth-child(2)  { animation-delay: 0.1s; }
+.game-card:nth-child(3)  { animation-delay: 0.15s; }
+.game-card:nth-child(4)  { animation-delay: 0.2s; }
+.game-card:nth-child(5)  { animation-delay: 0.25s; }
+.game-card:nth-child(6)  { animation-delay: 0.3s; }
+.game-card:nth-child(7)  { animation-delay: 0.35s; }
+.game-card:nth-child(8)  { animation-delay: 0.4s; }
+.game-card:nth-child(9)  { animation-delay: 0.45s; }
+.game-card:nth-child(10) { animation-delay: 0.5s; }
+
+/* ---- 响应式适配 ---- */
+@media (max-width: 768px) {
+  .timeline-sidebar {
+    width: 48px;
+    min-width: 48px;
+  }
+  .timeline-title {
+    font-size: 0.9rem;
+  }
+  .track {
+    padding: 1.25rem;
+  }
+  .track-title {
+    font-size: 1.1rem;
+  }
+  .game-card {
+    padding: 1rem;
+  }
+  .lightbox-prev {
+    left: 10px;
+  }
+  .lightbox-next {
+    right: 10px;
+  }
+}
+
+/* ---- 文章详情页 ---- */
+.post-detail {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  padding: 2rem 3rem;
+  background: var(--nord0);
+}
+
+.post-article {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.post-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--nord2);
+}
+
+.post-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--nord6);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--nord4);
+  font-size: 0.9rem;
+}
+
+.post-meta span {
+  background: var(--nord1);
+  padding: 0.3rem 0.8rem;
+  border-radius: var(--radius-sm);
+}
+
+.post-rating {
+  color: var(--nord13);
+}
+
+.post-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.post-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+}
+
+.post-content {
+  color: var(--nord4);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.post-content h2 {
+  color: var(--nord6);
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--nord2);
+}
+
+.post-content h3 {
+  color: var(--nord5);
+  font-size: 1.2rem;
+  margin: 1.5rem 0 0.8rem;
+}
+
+.post-content p {
+  margin-bottom: 1rem;
+}
+
+.post-content ul {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+}
+
+.post-content li {
+  margin: 0.5rem 0;
+}
+
+.post-tags {
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--nord2);
+}
+
+.back-link {
+  color: var(--nord9);
+  font-size: 0.9rem;
+  transition: color var(--transition-fast);
+}
+
+.back-link:hover {
+  color: var(--nord8);
+}

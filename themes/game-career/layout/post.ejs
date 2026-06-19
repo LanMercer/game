@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- partial('partial/head') %>
+</head>
+<body>
+  <div class="main-container">
+    <%- partial('partial/timeline') %>
+    
+    <main class="post-detail">
+      <article class="post-article">
+        <header class="post-header">
+          <h1 class="post-title"><%= page.title %></h1>
+          <div class="post-meta">
+            <span class="post-date"><%= page.date.format('YYYY.MM.DD') %></span>
+            <% if (page.platform) { %>
+              <span class="post-platform"><%= page.platform %></span>
+            <% } %>
+            <% if (page.play_time) { %>
+              <span class="post-playtime"><%= page.play_time %>h</span>
+            <% } %>
+            <% if (page.rating) { %>
+              <span class="post-rating">
+                <% for(let i = 0; i < page.rating; i++) { %>★<% } %>
+              </span>
+            <% } %>
+          </div>
+        </header>
+        
+        <% if (page.photos && page.photos.length > 0) { %>
+          <div class="post-gallery">
+            <% page.photos.forEach(photo => { %>
+              <img src="<%= photo %>" alt="<%= page.title %>" class="post-image">
+            <% }) %>
+          </div>
+        <% } %>
+        
+        <div class="post-content">
+          <%- page.content %>
+        </div>
+        
+        <% if (page.tags && page.tags.length > 0) { %>
+          <div class="post-tags">
+            <% page.tags.forEach(tag => { %>
+              <span class="tag"><%= tag.name %></span>
+            <% }) %>
+          </div>
+        <% } %>
+        
+        <footer class="post-footer">
+          <a href="/" class="back-link">← 返回首页</a>
+        </footer>
+      </article>
+    </main>
+  </div>
+  
+  <%- partial('partial/lightbox') %>
+  <%- partial('partial/scripts') %>
+</body>
+</html>
