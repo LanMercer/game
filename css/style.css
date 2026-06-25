@@ -914,3 +914,104 @@ button {
 .back-link:hover {
   color: var(--nord8);
 }
+
+/* ---- 年份锚点（隐藏） ---- */
+.year-anchor {
+  display: block;
+  position: relative;
+  top: -80px;
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+}
+
+/* ---- 年份浮动导航 ---- */
+.year-nav-float {
+  position: fixed;
+  right: 20px;
+  bottom: 30px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.year-nav-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--nord1);
+  border: 1px solid var(--nord3);
+  color: var(--nord8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-md);
+}
+
+.year-nav-toggle:hover,
+.year-nav-toggle.active {
+  background: var(--nord2);
+  border-color: var(--nord8);
+  color: var(--nord13);
+  transform: scale(1.1);
+}
+
+.year-nav-panel {
+  background: var(--nord1);
+  border: 1px solid var(--nord2);
+  border-radius: var(--radius-md);
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.95);
+  transition: all var(--transition-normal) var(--ease-out);
+  pointer-events: none;
+}
+
+.year-nav-panel.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.year-nav-title {
+  font-size: 0.7rem;
+  color: var(--nord3);
+  text-align: center;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--nord2);
+  margin-bottom: 4px;
+  letter-spacing: 0.1em;
+}
+
+.year-nav-item {
+  display: block;
+  padding: 6px 16px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--nord4);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
+
+.year-nav-item:hover {
+  background: var(--nord2);
+  color: var(--nord8);
+}
+
+.year-nav-item.active {
+  background: var(--nord9);
+  color: var(--nord6);
+  font-weight: 600;
+}
