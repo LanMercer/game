@@ -1,0 +1,3 @@
+# Local build tools; publish only the generated website.
+/scripts/
+__pycache__/
